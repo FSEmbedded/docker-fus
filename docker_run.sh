@@ -9,6 +9,7 @@ HOST_BUILD_DIR="./docker_build"
 DOCKER_COMMAND="bash"
 INTERACTIVE="-it"
 WORKDIR="/home/${USER}"
+FUS_DOCKER_GIT="$(dirname "$0")"
 
 export myUID=$(id -u)
 export myGID=$(id -g)
@@ -40,6 +41,11 @@ parse_arguments() {
             ;;
             -d|--hostdir)
                 HOST_BUILD_DIR="$2"
+                shift # past argument
+                shift # past value
+            ;;
+            --dockergit)
+                FUS_DOCKER_GIT="$2"
                 shift # past argument
                 shift # past value
             ;;
@@ -79,12 +85,12 @@ if [ -z ${DOCKER_CONTAINER} ]; then
 	DOCKER_CONTAINER=$(grep '<docker' "${YOCTO_MANIFEST}"| grep -Po 'version="\K.*?(?=")')
 fi
 
-if ! docker images | grep -q "${DOCKER_CONTAINER}"; then
-     docker build -t "${DOCKER_CONTAINER}" -f ./Dockerfile_${DOCKER_CONTAINER} ./docker-fus
-fi
-
 mkdir -p ${HOST_BUILD_DIR}/
 cd $HOST_BUILD_DIR
+
+if ! docker images | grep -q "${DOCKER_CONTAINER}"; then
+     docker build -t "${DOCKER_CONTAINER}" -f ${FUS_DOCKER_GIT}/Dockerfile_${DOCKER_CONTAINER} ${FUS_DOCKER_GIT}
+fi
 
 docker run ${INTERACTIVE} --rm \
 				--user ${myUID}:${myGID} \
