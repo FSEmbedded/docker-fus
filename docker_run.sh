@@ -9,7 +9,7 @@ HOST_BUILD_DIR="./docker_build"
 DOCKER_COMMAND="bash"
 INTERACTIVE="-it"
 WORKDIR="/home/${USER}"
-FUS_DOCKER_GIT="$(dirname "$0")"
+FUS_DOCKER_GIT="$(realpath $(dirname $0))"
 
 export myUID=$(id -u)
 export myGID=$(id -g)
