@@ -12,7 +12,7 @@ RUN apt-get install -y sudo openssl apt-utils git xmlstarlet
 RUN apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat cpio python2 python3 python3-pip python3-pexpect python-is-python3 xz-utils debianutils iputils-ping libsdl1.2-dev xterm curl lz4 zstd libarchive-zip-perl rsync bc xxd
 
 # Install basic Buildroot dependencies
-RUN apt-get -y install file sed make binutils diffutils gcc g++ bash patch gzip bzip2 tar cpio unzip rsync findutils
+RUN apt-get -y install sed make binutils build-essential diffutils gcc g++ bash patch gzip bzip2 perl tar cpio unzip rsync file findutils gawk wget libncurses-dev libarchive-zip-perl dosfstools
 
 # Install fsup-framework dependencies
 RUN apt-get -y install python3-parted
