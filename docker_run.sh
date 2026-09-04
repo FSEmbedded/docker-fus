@@ -94,6 +94,7 @@ fi
 
 docker run ${INTERACTIVE} --rm \
 				--user ${myUID}:${myGID} \
+                --ulimit nofile=4096:4096 \
 				--volume="${PWD}:/home/${USER}/" \
 				--volume="/etc/group:/etc/group:ro" \
 				--volume="/etc/passwd:/etc/passwd:ro" \
